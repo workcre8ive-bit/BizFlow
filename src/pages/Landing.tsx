@@ -65,34 +65,35 @@ export default function Landing() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 bg-gradient-to-b from-slate-50 to-white overflow-hidden">
+      <section className="pt-24 md:pt-32 pb-16 md:pb-20 px-4 bg-gradient-to-b from-slate-50 to-white overflow-hidden">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
+            className="text-center lg:text-left"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-xs font-semibold mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-[10px] md:text-xs font-semibold mb-6">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
               </span>
               Trusted by 2,000+ small businesses
             </div>
-            <h1 className="text-5xl md:text-7xl font-bold text-slate-900 leading-[1.1] mb-6">
-              Run Your Business <br />
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-slate-900 leading-[1.1] mb-6 font-sans">
+              Run Your Business <br className="hidden sm:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Without the Stress</span>
             </h1>
-            <p className="text-lg text-slate-600 mb-8 max-w-lg leading-relaxed">
+            <p className="text-base md:text-lg text-slate-600 mb-8 max-w-lg mx-auto lg:mx-0 leading-relaxed">
               The all-in-one platform to manage your customers, invoices, tasks, and appointments. Built for freelancers and modern small businesses.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="h-14 px-8" onClick={() => navigate('/signup')}>
-                Start Your 14-Day Free Trial
+            <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+              <Button size="lg" className="h-12 md:h-14 px-8 w-full sm:w-auto" onClick={() => navigate('/signup')}>
+                Start Free Trial
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
-              <Button variant="outline" size="lg" className="h-14 px-8" onClick={() => navigate('/dashboard')}>
-                View Dashboard Demo
+              <Button variant="outline" size="lg" className="h-12 md:h-14 px-8 w-full sm:w-auto" onClick={() => navigate('/dashboard')}>
+                View Demo
               </Button>
             </div>
           </motion.div>
@@ -101,9 +102,9 @@ export default function Landing() {
             initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative"
+            className="relative px-4 sm:px-0"
           >
-            <div className="relative z-10 rounded-3xl border border-slate-200 shadow-2xl overflow-hidden shadow-blue-500/10">
+            <div className="relative z-10 rounded-2xl md:rounded-3xl border border-slate-200 shadow-2xl overflow-hidden shadow-blue-500/10">
               <img 
                 src="https://picsum.photos/seed/bizflow-dash/1200/800" 
                 alt="Dashboard Preview" 
@@ -113,35 +114,19 @@ export default function Landing() {
               <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none" />
             </div>
             
-            {/* Floating Element 1 */}
+            {/* Floating Element 1 - Hidden on small mobile */}
             <motion.div 
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-12 -right-8 z-20 glass p-4 rounded-2xl shadow-xl hidden md:block"
+              className="absolute -top-6 -right-4 md:-top-12 md:-right-8 z-20 glass p-3 md:p-4 rounded-xl md:rounded-2xl shadow-xl hidden sm:block"
             >
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center">
-                  <CheckCircle2 className="w-6 h-6 text-emerald-600" />
+                <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-emerald-50 flex items-center justify-center">
+                  <CheckCircle2 className="w-5 h-5 md:w-6 md:h-6 text-emerald-600" />
                 </div>
-                <div>
-                  <p className="text-xs font-semibold text-slate-900">Task Completed</p>
-                  <p className="text-[10px] text-slate-500">Invoice #4202 sent</p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Floating Element 2 */}
-            <motion.div 
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -bottom-10 -left-10 z-20 dark-glass p-5 rounded-2xl shadow-xl hidden md:block"
-            >
-              <div className="flex flex-col gap-2">
-                <p className="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Total Revenue</p>
-                <p className="text-2xl font-bold text-white">$42,920.00</p>
-                <div className="flex items-center gap-1 text-emerald-400 text-[10px]">
-                  <TrendingUp className="w-3 h-3" />
-                  <span>+12.5% vs last month</span>
+                <div className="text-left">
+                  <p className="text-[10px] md:text-xs font-semibold text-slate-900">Task Completed</p>
+                  <p className="text-[8px] md:text-[10px] text-slate-500">Invoice #4202 sent</p>
                 </div>
               </div>
             </motion.div>

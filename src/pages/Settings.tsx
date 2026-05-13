@@ -181,6 +181,62 @@ export default function Settings() {
             </Card>
           </motion.div>
         )}
+
+        {activeTab === 'security' && (
+          <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
+            <Card>
+              <h3 className="font-bold text-slate-900 mb-6">Change Password</h3>
+              <form className="space-y-4">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-slate-400 uppercase">Current Password</label>
+                  <Input type="password" placeholder="••••••••" />
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-slate-400 uppercase">New Password</label>
+                    <Input type="password" placeholder="••••••••" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-slate-400 uppercase">Confirm New Password</label>
+                    <Input type="password" placeholder="••••••••" />
+                  </div>
+                </div>
+                <div className="pt-2">
+                  <Button variant="secondary">Update Password</Button>
+                </div>
+              </form>
+            </Card>
+
+            <Card>
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h3 className="font-bold text-slate-900">Two-Factor Authentication</h3>
+                  <p className="text-sm text-slate-500">Add an extra layer of security to your account.</p>
+                </div>
+                <div className={cn(
+                  "px-3 py-1 rounded-full text-[10px] font-bold uppercase",
+                  "bg-orange-50 text-orange-600"
+                )}>
+                  Recommended
+                </div>
+              </div>
+              <div className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100 mb-6">
+                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center border border-slate-200">
+                  <Shield className="w-5 h-5 text-blue-600" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-slate-900">Authenticator App</p>
+                  <p className="text-xs text-slate-500">Use apps like Google Authenticator or 1Password.</p>
+                </div>
+                <Button size="sm" variant="outline">Setup</Button>
+              </div>
+              <div className="flex items-center justify-between pt-2 border-t border-slate-100">
+                <p className="text-xs text-slate-400 font-medium italic">Last login from SF, California (IP: 192.168.1.1)</p>
+                <Button variant="ghost" size="sm" className="text-red-600 hover:bg-red-50">Log out of all devices</Button>
+              </div>
+            </Card>
+          </motion.div>
+        )}
       </div>
     </div>
   );

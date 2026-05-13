@@ -39,6 +39,7 @@ export const initialCustomers: Customer[] = [
   { id: '1', name: 'John Smith', email: 'john@techcorp.com', phone: '555-0101', company: 'TechCorp Solutions', status: 'active', createdAt: '2024-01-15' },
   { id: '2', name: 'Sarah Wilson', email: 'sarah@designhub.io', phone: '555-0202', company: 'DesignHub', status: 'active', createdAt: '2024-02-10' },
   { id: '3', name: 'Michael Brown', email: 'michael@buildit.com', phone: '555-0303', company: 'BuildIt Construction', status: 'inactive', createdAt: '2024-03-05' },
+  { id: '4', name: 'Emily Davis', email: 'emily@creativeedge.com', phone: '555-0404', company: 'CreativeEdge', status: 'active', createdAt: '2024-04-12' },
 ];
 
 export const initialInvoices: Invoice[] = [

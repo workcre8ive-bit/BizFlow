@@ -68,6 +68,10 @@ export default function Dashboard() {
   const pendingInvoices = invoices.filter(inv => inv.status !== 'paid').length;
   const activeCustomers = customers.filter(c => c.status === 'active').length;
 
+  const recentCustomers = [...customers]
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .slice(0, 3);
+
   const stats = [
     { label: 'Total Revenue', value: formatCurrency(totalRevenue), icon: DollarSign, trend: 'Net Profit', color: 'text-emerald-600', bg: 'bg-emerald-50' },
     { label: 'Pending Invoices', value: pendingInvoices, icon: FileText, trend: `${invoices.filter(i => i.status === 'unpaid').length} Overdue`, color: 'text-orange-600', bg: 'bg-orange-50' },
@@ -76,26 +80,26 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="p-8 max-w-7xl mx-auto space-y-8">
-      <div className="flex justify-between items-center">
+    <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-6 md:space-y-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Good Morning, Partner</h1>
-          <p className="text-slate-500 text-sm">Here's what's happening with your business today.</p>
+          <h1 className="text-xl md:text-2xl font-bold text-slate-900">Good Morning, Partner</h1>
+          <p className="text-slate-500 text-xs md:text-sm">Here's what's happening with your business today.</p>
         </div>
-        <div className="flex gap-3">
-          <Button variant="outline" onClick={() => navigate('/appointments')}>
+        <div className="flex gap-2 w-full sm:w-auto">
+          <Button variant="outline" size="sm" className="flex-1 sm:flex-none" onClick={() => navigate('/appointments')}>
             <Calendar className="w-4 h-4 mr-2" />
             Schedule
           </Button>
-          <Button onClick={() => navigate('/invoices')}>
+          <Button size="sm" className="flex-1 sm:flex-none" onClick={() => navigate('/invoices')}>
             <Plus className="w-4 h-4 mr-2" />
-            New Invoice
+            Invoice
           </Button>
         </div>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         {stats.map((stat, i) => (
           <motion.div
             key={stat.label}
@@ -103,33 +107,33 @@ export default function Dashboard() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
           >
-            <Card className="hover:shadow-md transition-shadow">
+            <Card className="hover:shadow-md transition-shadow h-full pb-4 md:pb-6">
               <div className="flex items-start justify-between">
                 <div className={cn("p-2 rounded-lg", stat.bg)}>
                   <stat.icon className={cn("w-5 h-5", stat.color)} />
                 </div>
-                <span className="text-xs font-medium text-slate-400">{stat.trend}</span>
+                <span className="text-[10px] md:text-xs font-medium text-slate-400">{stat.trend}</span>
               </div>
               <div className="mt-4">
-                <p className="text-sm text-slate-500 uppercase tracking-wider font-semibold">{stat.label}</p>
-                <p className="text-2xl font-bold text-slate-900 mt-1">{stat.value}</p>
+                <p className="text-[10px] md:text-sm text-slate-500 uppercase tracking-wider font-semibold">{stat.label}</p>
+                <p className="text-xl md:text-2xl font-bold text-slate-900 mt-1">{stat.value}</p>
               </div>
             </Card>
           </motion.div>
         ))}
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
         {/* Sales Chart */}
-        <Card className="lg:col-span-2">
-          <div className="flex items-center justify-between mb-8">
-            <h3 className="font-bold text-slate-900">Revenue Over Time</h3>
-            <select className="text-sm border-none bg-slate-50 rounded-lg px-2 py-1 outline-none">
+        <Card className="lg:col-span-2 overflow-hidden">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 md:mb-8 gap-2">
+            <h3 className="font-bold text-slate-900 font-sans">Revenue Over Time</h3>
+            <select className="text-xs md:text-sm border-none bg-slate-50 rounded-lg px-2 py-1 outline-none w-full sm:w-auto">
               <option>Last 6 months</option>
               <option>Year to date</option>
             </select>
           </div>
-          <div className="h-[300px] w-full">
+          <div className="h-[250px] md:h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={chartData}>
                 <defs>
@@ -143,17 +147,18 @@ export default function Dashboard() {
                   dataKey="name" 
                   axisLine={false} 
                   tickLine={false} 
-                  tick={{ fontSize: 12, fill: '#94a3b8' }}
+                  tick={{ fontSize: 10, fill: '#94a3b8' }}
                   dy={10}
                 />
                 <YAxis 
                   axisLine={false} 
                   tickLine={false} 
-                  tick={{ fontSize: 12, fill: '#94a3b8' }}
+                  tick={{ fontSize: 10, fill: '#94a3b8' }}
                   tickFormatter={(v) => `$${v}`}
+                  width={40}
                 />
                 <Tooltip 
-                  contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
+                  contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', fontSize: '12px' }}
                 />
                 <Area 
                   type="monotone" 
@@ -171,18 +176,18 @@ export default function Dashboard() {
         {/* Task Quick List */}
         <Card>
           <div className="flex items-center justify-between mb-6">
-            <h3 className="font-bold text-slate-900">Priority Tasks</h3>
+            <h3 className="font-bold text-slate-900 font-sans">Priority Tasks</h3>
             <Button variant="ghost" size="sm" onClick={() => navigate('/tasks')}>View All</Button>
           </div>
           <div className="space-y-4">
             {priorityTasks.map((task) => (
               <div key={task.id} className="flex items-center gap-4 group">
                 <div className={cn(
-                  "w-2 h-10 rounded-full",
+                  "w-1.5 md:w-2 h-8 md:h-10 rounded-full shrink-0",
                   task.priority === 'high' ? 'bg-red-500' : 'bg-blue-500'
                 )} />
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium text-sm text-slate-900 truncate">{task.title}</p>
+                  <p className="font-medium text-xs md:text-sm text-slate-900 truncate">{task.title}</p>
                   <div className="flex items-center text-[10px] text-slate-500 gap-1 mt-1">
                     <Clock className="w-3 h-3" />
                     <span>Due {task.deadline}</span>
@@ -200,33 +205,58 @@ export default function Dashboard() {
       </div>
 
       {/* Recent Activity */}
-      <Card>
-        <h3 className="font-bold text-slate-900 mb-6">Recent Activity</h3>
-        <div className="space-y-6">
-          {recentInvoices.map((inv) => (
-            <div key={inv.id} className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
-                <FileText className="w-5 h-5 text-slate-600" />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+        <Card>
+          <h3 className="font-bold text-slate-900 mb-6 font-sans">Recent Transactions</h3>
+          <div className="space-y-6">
+            {recentInvoices.map((inv) => (
+              <div key={inv.id} className="flex items-start sm:items-center gap-3 sm:gap-4">
+                <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200 shrink-0">
+                  <FileText className="w-4 h-4 md:w-5 md:h-5 text-slate-600" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs md:text-sm text-slate-900">
+                    <span className="font-semibold">{inv.status === 'paid' ? 'Payment' : 'New invoice'}</span> for {formatCurrency(inv.amount)}
+                  </p>
+                  <p className="text-[10px] md:text-xs text-slate-400 mt-0.5">{inv.createdAt}</p>
+                </div>
+                <div className={cn(
+                  "px-2 py-1 rounded text-[9px] md:text-[10px] font-bold uppercase shrink-0",
+                  inv.status === 'paid' ? 'bg-emerald-50 text-emerald-600' : 'bg-orange-50 text-orange-600'
+                )}>
+                  {inv.status}
+                </div>
               </div>
-              <div className="flex-1">
-                <p className="text-sm text-slate-900">
-                  <span className="font-semibold">{inv.status === 'paid' ? 'Payment received' : 'New invoice created'}</span> for {formatCurrency(inv.amount)}
-                </p>
-                <p className="text-xs text-slate-400 mt-0.5">{inv.createdAt}</p>
+            ))}
+            {recentInvoices.length === 0 && (
+              <p className="text-sm text-slate-400 text-center py-4">No recent activity found.</p>
+            )}
+          </div>
+        </Card>
+
+        <Card>
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="font-bold text-slate-900 font-sans">Recent Customers</h3>
+            <Button variant="ghost" size="sm" onClick={() => navigate('/customers')}>View All</Button>
+          </div>
+          <div className="space-y-6">
+            {recentCustomers.map((customer) => (
+              <div key={customer.id} className="flex items-center gap-3 sm:gap-4">
+                <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 font-bold text-xs md:text-sm shrink-0">
+                  {customer.name.substring(0, 2).toUpperCase()}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs md:text-sm font-semibold text-slate-900 truncate">{customer.name}</p>
+                  <p className="text-[10px] md:text-xs text-slate-500 truncate">{customer.company}</p>
+                </div>
+                <div className="text-[9px] md:text-[10px] text-slate-400 font-medium shrink-0">
+                  {customer.createdAt}
+                </div>
               </div>
-              <div className={cn(
-                "px-2 py-1 rounded text-[10px] font-bold uppercase",
-                inv.status === 'paid' ? 'bg-emerald-50 text-emerald-600' : 'bg-orange-50 text-orange-600'
-              )}>
-                {inv.status}
-              </div>
-            </div>
-          ))}
-          {recentInvoices.length === 0 && (
-            <p className="text-sm text-slate-400 text-center py-4">No recent activity found.</p>
-          )}
-        </div>
-      </Card>
+            ))}
+          </div>
+        </Card>
+      </div>
     </div>
   );
 }
