@@ -1,0 +1,8 @@
+{
+  "name": "BizFlow",
+  "description": "A premium all-in-one business management suite for small businesses and freelancers. Manage customers, invoices, tasks, and appointments with a professional SaaS interface.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
